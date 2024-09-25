@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="gitbase",
-    version="0.2.2",
+    version="0.2.8",
     author="Taireru LLC",
     author_email="tairerullc@gmail.com",
     description="A GitHub based database system (Offers offline backups).",
