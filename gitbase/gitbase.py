@@ -156,6 +156,21 @@ print(key_1)
         with open("example_code.py", "wb") as file:
             file.write(bytes(example_code, 'UTF-8'))
 
+    def get_file_last_modified(self, path: str) -> Optional[float]:
+        """Get the last modified timestamp of the file from the GitHub repository."""
+        try:
+            url = f"https://api.github.com/repos/{self.repo_owner}/{self.repo_name}/commits?path={path}"
+            response = requests.get(url, headers=self.headers)
+            if response.status_code == 200:
+                commits = response.json()
+                if commits:
+                    # Get the date of the most recent commit
+                    last_modified = commits[0]['commit']['committer']['date']
+                    return datetime.strptime(last_modified, "%Y-%m-%dT%H:%M:%SZ").timestamp()
+        except Exception as e:
+            print(colored_text("RED", f"Error getting last modified time for {path}: {e}"))
+        return None
+
 class PlayerDataSystem:
     def __init__(self, db: GitBase, encryption_key: bytes) -> None:
         self.db: GitBase = db
@@ -193,7 +208,8 @@ class PlayerDataSystem:
             self.save_offline_data(username, player_instance, attributes)
 
     def save_offline_data(self, username: str, player_instance: Any, attributes: Optional[List[str]] = None) -> None:
-        os.makedirs("gitbase/data/players", exist_ok=True)
+        if not os.path.exists("gitbase/data/players"):
+            os.makedirs("gitbase/data/players")
 
         if attributes:
             player_data: Dict[str, Union[str, int, float]] = {var: getattr(player_instance, var) for var in attributes if hasattr(player_instance, var)}
@@ -201,13 +217,12 @@ class PlayerDataSystem:
             player_data: Dict[str, Union[str, int, float]] = {var: getattr(player_instance, var) for var in player_instance.__dict__}
 
         encrypted_data: bytes = self.encrypt_data(json.dumps(player_data))
-        name: str = getattr(player_instance, 'username', None) or getattr(player_instance, 'first_name', "example_name")
-        path: str = os.path.join("gitbase/data/players", f"{name}.gitbase")
+        path: str = os.path.join("gitbase/data/players", f"{username}.gitbase")
 
         try:
             with open(path, "wb") as file:
                 file.write(encrypted_data)
-            print(colored_text("GREEN", f"Successfully saved offline backup for {name}."))
+            print(colored_text("GREEN", f"Successfully saved offline backup for {username}."))
         except Exception as e:
             print(colored_text("RED", f"Error: {e}"))
 
@@ -218,24 +233,29 @@ class PlayerDataSystem:
             if is_online():
                 online_data, _ = self.db.read_data(path)
                 offline_path: str = f"gitbase/data/players/{username}.gitbase"
-                offline_data_exists = os.path.exists(offline_path)
+                if os.path.exists(offline_path):
+                    offline_data_exists = True
+                else:
+                    offline_data_exists = False
 
                 if online_data:
-                    online_timestamp = self.get_file_timestamp(path)
-                    offline_timestamp = os.path.getmtime(offline_path) if offline_data_exists else 0
-                    
-                    if offline_data_exists and online_timestamp < offline_timestamp:
+                    online_timestamp = self.db.get_file_last_modified(path)
+                    if offline_data_exists:
+                        offline_timestamp = os.path.getmtime(offline_path)
+
+                    if offline_data_exists and offline_timestamp > online_timestamp:
                         print(colored_text("GREEN", f"Loading offline backup for {username} (newer version found)."))
                         self.load_offline_data(username, player_instance)
+                        self.db.write_data(path, json.dumps(player_instance.__dict__), "Syncing offline with online")
+                        loaded_data = True
                     else:
-                        print(colored_text("GREEN", f"Loading online data for {username}."))
+                        print(colored_text("GREEN", f"Loading online data for {username} (newer version)."))
                         decrypted_data: str = self.decrypt_data(online_data.encode('utf-8'))
                         player_data: Dict[str, Union[str, int, float]] = json.loads(decrypted_data)
-
                         for var, value in player_data.items():
                             setattr(player_instance, var, value)
-                        
                         loaded_data = True
+                        self.save_offline_data(username, player_instance)
                 elif offline_data_exists:
                     print(colored_text("GREEN", f"Loading offline backup for {username} (no online data available)."))
                     self.load_offline_data(username, player_instance)
@@ -258,23 +278,16 @@ class PlayerDataSystem:
                     encrypted_data = file.read()
                 decrypted_data: str = self.decrypt_data(encrypted_data)
                 player_data: Dict[str, Union[str, int, float]] = json.loads(decrypted_data)
-
                 for var, value in player_data.items():
                     setattr(player_instance, var, value)
                 print(colored_text("GREEN", f"Successfully loaded offline backup for {username}."))
-                
                 loaded_data = True
             else:
+                print(colored_text("RED", f"No offline backup found for {username}."))
                 loaded_data = False
         except Exception as e:
+            print(colored_text("RED", f"Error loading offline backup: {e}"))
             loaded_data = False
-            print(colored_text("RED", f"Error loading offline data for {username}: {e}"))
-
-    def get_file_timestamp(self, path: str) -> float:
-        response = self.db.read_data(path)
-        if response:
-            return datetime.now().timestamp()  # Adjust as needed for actual timestamp from GitHub
-        return 0
 
 class DataSystem:
     def __init__(self, db: GitBase, encryption_key: bytes) -> None:
