@@ -1,6 +1,11 @@
 # GitBase
 
-GitBase is a Python package for custom databases powered by GitHub, with encryption using `cryptography`. It allows you, as a python developer to have a quick and easy to use database without learning a whole new programming language.
+GitBase is a Python package for custom databases powered by GitHub, with encryption using `cryptography`. It allows you, as a python developer to have a quick and easy to use database without learning a whole new programming language. Furthermore, we offer offline backups for users of your application, this means their data can be saved, loaded, and deleted even if they have no internet. Moreover, the online version will be updated based on which file, the offline or online, is the latest.
+
+## Latest Updates: 
+* Offline data saving system
+* Example code function 'gitbase.GitBase.generate_example()'
+* Better password handling
 
 ## Installation
 
@@ -13,35 +18,53 @@ pip install gitbase
 Example code: 
 
 ```py
-from gitbase.gitbase import GitHubDatabase, PlayerDataSystem, DataSystem
+import gitbase.gitbase as gitbase
 from cryptography.fernet import Fernet
+import sys
 
 # Generate an example of how to use gitbase [NOT NEEDED IF YOU ARE READING THIS]
-GitHubDatabase.generate_example()
+gitbase.GitBase.generate_example()
 
 # Initialize GitHub database and encryption key
 token = "your_github_token"
-repo_owner = "your_repo_owner"
+repo_owner = "your_github_username"
 repo_name = "your_repo_name"
 key = Fernet.generate_key()
 
-db = GitHubDatabase(token, repo_owner, repo_name)
-player_data_system = PlayerDataSystem(db, key)
-data_system = DataSystem(db, key)
+db = gitbase.GitBase(token, repo_owner, repo_name)
+player_data_system = gitbase.PlayerDataSystem(db, key)
+data_system = gitbase.DataSystem(db, key)
 
 # Player instance with some attributes
 class Player:
-    def __init__(self, username, score):
+    def __init__(self, username, score, password):
         self.username = username
         self.score = score
+        self.password = password
 
-player = Player("john_doe", 100)
+player = Player("john_doe", 100, "123")
 
 # Save specific attributes of the player instance
-player_data_system.save_player_data("john_doe", player, attributes=["username", "score"])
+player_data_system.save_player_data("john_doe", player, attributes=["username", "score", "password"])
 
 # Load player data
 player_data_system.load_player_data("john_doe", player)
+
+# Placeholder functions
+def load_game():
+    print("Cool game text")
+
+def main_menu():
+    sys.exit()
+
+# Check if there is a valid account before prompting for password
+if gitbase.data_loaded():
+    if player.password == input("Enter your password: "):
+        print("Correct!")
+        load_game()
+    else:
+        print("Incorrect password!")
+        main_menu()
 
 # Save a piece of data using a key and value pair
 data_system.save_data(key="key_name", value=69)
