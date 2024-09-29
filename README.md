@@ -3,9 +3,7 @@
 GitBase is a Python package for custom databases powered by GitHub, with encryption using `cryptography`. It allows you, as a python developer to have a quick and easy to use database without learning a whole new programming language. Furthermore, we offer offline backups for users of your application, this means their data can be saved, loaded, and deleted even if they have no internet. Moreover, the online version will be updated based on which file, the offline or online, is the latest.
 
 ## Latest Updates: 
-* Offline data saving system
-* Example code function 'gitbase.GitBase.generate_example()'
-* Better password handling
+* Added optional encryption [FORCED FOR OFFLINE]
 
 ## Installation
 
@@ -26,12 +24,12 @@ import sys
 gitbase.GitBase.generate_example()
 
 # Initialize GitHub database and encryption key
-token = "your_github_token"
-repo_owner = "your_github_username"
-repo_name = "your_repo_name"
+GITHUB_TOKEN = "YOUR_TOKEN"
+REPO_OWNER = "YOUR_GITHUB_USERNAME"
+REPO_NAME = "YOUR REPO NAME"
 key = Fernet.generate_key()
 
-db = gitbase.GitBase(token, repo_owner, repo_name)
+db = gitbase.GitBase(GITHUB_TOKEN, REPO_OWNER, REPO_NAME)
 player_data_system = gitbase.PlayerDataSystem(db, key)
 data_system = gitbase.DataSystem(db, key)
 
@@ -45,10 +43,10 @@ class Player:
 player = Player("john_doe", 100, "123")
 
 # Save specific attributes of the player instance
-player_data_system.save_player_data("john_doe", player, attributes=["username", "score", "password"])
+player_data_system.save_player_data("john_doe", player, True, attributes=["username", "score", "password"])
 
 # Load player data
-player_data_system.load_player_data("john_doe", player)
+player_data_system.load_player_data("john_doe", player, True)
 
 # Placeholder functions
 def load_game():
