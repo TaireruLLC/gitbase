@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="gitbase",
-    version="0.3.4",
+    version="0.3.7",
     author="Taireru LLC",
     author_email="tairerullc@gmail.com",
     description="A GitHub based database system which offers offline backups and optional encryption.",
@@ -13,7 +13,7 @@ setup(
     install_requires=[
         "requests",
         "cryptography",
-        "altcolor"
+        "altcolor>=0.0.2"
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
