@@ -3,7 +3,7 @@
 GitBase is a Python package for custom databases powered by GitHub, with encryption using `cryptography`. It allows you, as a python developer to have a quick and easy to use database without learning a whole new programming language. Furthermore, we offer offline backups for users of your application, this means their data can be saved, loaded, and deleted even if they have no internet. Moreover, the online version will be updated based on which file, the offline or online, is the latest.
 
 ## Latest Updates: 
-* Added optional encryption [FORCED FOR OFFLINE]
+* Refactored our system
 
 ## Installation
 
@@ -16,22 +16,22 @@ pip install gitbase
 Example code: 
 
 ```py
-import gitbase.gitbase as gitbase
+from gitbase import *
 from cryptography.fernet import Fernet
 import sys
 
 # Generate an example of how to use gitbase [NOT NEEDED IF YOU ARE READING THIS]
-gitbase.GitBase.generate_example()
+GitBase.generate_example()
 
 # Initialize GitHub database and encryption key
 GITHUB_TOKEN = "YOUR_TOKEN"
 REPO_OWNER = "YOUR_GITHUB_USERNAME"
-REPO_NAME = "YOUR REPO NAME"
+REPO_NAME = "YOUR_REPO_NAME"
 key = Fernet.generate_key()
 
-db = gitbase.GitBase(GITHUB_TOKEN, REPO_OWNER, REPO_NAME)
-player_data_system = gitbase.PlayerDataSystem(db, key)
-data_system = gitbase.DataSystem(db, key)
+db = GitBase(GITHUB_TOKEN, REPO_OWNER, REPO_NAME)
+player_data_system = PlayerDataSystem(db, key)
+data_system = DataSystem(db, key)
 
 # Player instance with some attributes
 class Player:
@@ -43,10 +43,10 @@ class Player:
 player = Player("john_doe", 100, "123")
 
 # Save specific attributes of the player instance
-player_data_system.save_player_data("john_doe", player, True, attributes=["username", "score", "password"])
+player_data_system.save_account(username="john_doe", player_instance=player, encryption=True, attributes=["username", "score", "password"])
 
 # Load player data
-player_data_system.load_player_data("john_doe", player, True)
+player_data_system.load_account(username="john_doe", player_instance=player, encryption=True)
 
 # Placeholder functions
 def load_game():
@@ -56,7 +56,7 @@ def main_menu():
     sys.exit()
 
 # Check if there is a valid account before prompting for password
-if gitbase.data_loaded():
+if data_loaded():
     if player.password == input("Enter your password: "):
         print("Correct!")
         load_game()
@@ -65,16 +65,25 @@ if gitbase.data_loaded():
         main_menu()
 
 # Save a piece of data using a key and value pair
-data_system.save_data(key="key_name", value=69)
+data_system.save_data(key="key_name", value=69, encryption=True)
 
 # Load the value of a specific key by its name
-key_1 = data_system.load_data(key="key_name")
+key_1 = data_system.load_data(key="key_name", encryption=True)
 
 # Print the value
-print(key_1)
+print(key_1.value)
 
-# Delete data | data_system.delete_data(key="key_name")
-# Delete account | player_data_system.delete_account(username="john_doe")
+# Print the key
+print(key_1.key)
+
+# Get all key-value pairs
+print(data_system.get_all())
+
+# Delete data
+data_system.delete_data(key="key_name")
+
+# Delete account
+player_data_system.delete_account(username="john_doe")
 ```
 
 # Consider using GitBase Web: https://github.com/TaireruLLC/gitbase-web
