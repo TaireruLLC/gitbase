@@ -2,21 +2,22 @@
 
 GitBase is a Python package for custom databases powered by GitHub, with encryption using `cryptography`. It allows you, as a python developer to have a quick and easy to use database without learning a whole new programming language. Furthermore, we offer offline backups for users of your application, this means their data can be saved, loaded, and deleted even if they have no internet. Moreover, the online version will be updated based on which file, the offline or online, is the latest.
 
-## Latest Updates: 
-* Refactored our system
+# Attention Developers: 
 
-## Installation
+We are both excited and grateful to announce that **GitBase** has transitioned to a paid product! You can now purchase it directly from our website: [GitBase Product Page](https://tairerullc.vercel.app/apps/gitbase.html).
 
-Install via pip:
+For just **$5 USD**, you will receive the full version of GitBase after payment. We sincerely thank you for your support and for using the free version of our product. We hope you will continue to be part of our community as we evolve. 
 
-```bash
-pip install gitbase
-```
+Thank you for your continued support!
+
+Warm regards,  
+**Tyrell Scott**  
+**CEO & Founder, Taireru LLC**
 
 Example code: 
 
 ```py
-from gitbase import *
+from gitbase.gitbase import *
 from cryptography.fernet import Fernet
 import sys
 
@@ -94,7 +95,7 @@ player_data_system.delete_account(username="john_doe")
 ### Please note that to view said data you **MUST** use a private repo and use a website hosting service such as vercel.
 
 ## Links: 
-### GitBase: https://pypi.org/project/gitbase/
+### GitBase: https://tairerullc.vercel.app/apps/gitbase.html
 ### Website: https://tairerullc.vercel.app/
 
 
