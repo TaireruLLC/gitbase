@@ -14,7 +14,7 @@ Warm regards,
 **Tyrell Scott**  
 **CEO & Founder, Taireru LLC**
 
-Example code: 
+# Example code: 
 
 ```py
 from gitbase.gitbase import *
@@ -87,8 +87,7 @@ data_system.delete_data(key="key_name")
 player_data_system.delete_account(username="john_doe")
 ```
 
-# Consider using GitBase Web: https://github.com/TaireruLLC/gitbase-web
-
+# Consider using [GitBase Web](https://tairerullc.vercel.app/apps/gitbase_web.html): 
 ## Gitbase Web: 
 
 ### Gitbase Web is an extension of the PyPi module by Taireru LLC called GitBase. This extension allows the developer to veiw all of their saved data via the web.
