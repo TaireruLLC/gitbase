@@ -90,7 +90,7 @@ player_data_system.delete_account(username="john_doe")
 # Consider using [GitBase Web](https://tairerullc.vercel.app/apps/gitbase_web.html): 
 ## Gitbase Web: 
 
-### Gitbase Web is an extension of the PyPi module by Taireru LLC called GitBase. This extension allows the developer to veiw all of their saved data via the web.
+### Gitbase Web is an extension of the python project by Taireru LLC called GitBase. This extension allows the developer to veiw all of their saved data via the web.
 ### Please note that to view said data you **MUST** use a private repo and use a website hosting service such as vercel.
 
 ## Links: 
