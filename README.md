@@ -3,7 +3,7 @@
 GitBase is a Python package for custom databases powered by GitHub, with encryption using `cryptography`. It allows you, as a python developer to have a quick and easy to use database without learning a whole new programming language. Furthermore, we offer offline backups for users of your application, this means their data can be saved, loaded, and deleted even if they have no internet. Moreover, the online version will be updated based on which file, the offline or online, is the latest.
 
 # Latest Update: 
-* Removed 'wait' from credits so scripts can execute faster
+* Added file upload and downloading
 
 # Attention Developers: 
 
@@ -20,7 +20,7 @@ Warm regards,
 # Example code: 
 
 ```py
-from gitbase.gitbase import *
+from gitbase import *
 from cryptography.fernet import Fernet
 import sys
 
@@ -36,6 +36,8 @@ key = Fernet.generate_key()
 db = GitBase(GITHUB_TOKEN, REPO_OWNER, REPO_NAME)
 player_data_system = PlayerDataSystem(db, key)
 data_system = DataSystem(db, key)
+
+db.upload_file("my_file.txt", "where_I_want_to_save_it_in_database.text")
 
 # Player instance with some attributes
 class Player:
