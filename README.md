@@ -37,7 +37,10 @@ db = GitBase(GITHUB_TOKEN, REPO_OWNER, REPO_NAME)
 player_data_system = PlayerDataSystem(db, key)
 data_system = DataSystem(db, key)
 
-db.upload_file("my_file.txt", "where_I_want_to_save_it_in_database.text")
+# Upload and download files
+db.upload_file("my_file.txt", "where/I/want/to/save/it/in/database")
+
+db.download_file("my_file.txt")
 
 # Player instance with some attributes
 class Player:
