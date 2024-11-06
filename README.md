@@ -20,78 +20,81 @@ Warm regards,
 # Example code: 
 
 ```py
-from gitbase import *
+# Example for GitBase 0.4.0
+from gitbase import GitBase, PlayerDataSystem, DataSystem
 from cryptography.fernet import Fernet
 import sys
-
-# Generate an example of how to use gitbase [NOT NEEDED IF YOU ARE READING THIS]
-GitBase.generate_example()
 
 # Initialize GitHub database and encryption key
 GITHUB_TOKEN = "YOUR_TOKEN"
 REPO_OWNER = "YOUR_GITHUB_USERNAME"
 REPO_NAME = "YOUR_REPO_NAME"
-key = Fernet.generate_key()
+encryption_key = Fernet.generate_key()
 
-db = GitBase(GITHUB_TOKEN, REPO_OWNER, REPO_NAME)
-player_data_system = PlayerDataSystem(db, key)
-data_system = DataSystem(db, key)
+# Setup GitBase with GitHub credentials
+database = GitBase(GITHUB_TOKEN, REPO_OWNER, REPO_NAME)
+player_data_system = PlayerDataSystem(db=database, encryption_key=encryption_key)
+data_system = DataSystem(db=database, encryption_key=encryption_key)
 
-# Upload and download files
-db.upload_file("my_file.txt", "where/I/want/to/save/it/in/database")
+# Upload and download example files to/from GitHub
+database.upload_file(file_path="my_file.txt", remote_path="saved_files")
+database.download_file(remote_path="my_file.txt", local_path="files")
 
-db.download_file("my_file.txt")
-
-# Player instance with some attributes
+# Define the Player class to manage individual player instances
 class Player:
     def __init__(self, username, score, password):
         self.username = username
         self.score = score
         self.password = password
 
-player = Player("john_doe", 100, "123")
+# Create a sample player instance
+player = Player(username="john_doe", score=100, password="123")
 
-# Save specific attributes of the player instance
-player_data_system.save_account(username="john_doe", player_instance=player, encryption=True, attributes=["username", "score", "password"])
+# Save specific attributes of the player instance with encryption
+player_data_system.save_account(
+    username="john_doe",
+    player_instance=player,
+    encryption=True,
+    attributes=["username", "score", "password"],
+    path="players"
+)
 
 # Load player data
 player_data_system.load_account(username="john_doe", player_instance=player, encryption=True)
 
-# Placeholder functions
+# Placeholder functions for game flow
 def load_game():
-    print("Cool game text")
+    print("Game starting...")
 
 def main_menu():
-    sys.exit()
+    sys.exit("Exiting game...")
 
-# Check if there is a valid account before prompting for password
-if data_loaded():
+# Check if an account exists and validate user password
+if player_data_system.get_all(path="players"):
     if player.password == input("Enter your password: "):
-        print("Correct!")
+        print("Login successful!")
         load_game()
     else:
         print("Incorrect password!")
         main_menu()
 
-# Save a piece of data using a key and value pair
-data_system.save_data(key="key_name", value=69, encryption=True)
+# Save key-value data with encryption
+data_system.save_data(key="key_name", value=69, path="data", encryption=True)
 
-# Load the value of a specific key by its name
-key_1 = data_system.load_data(key="key_name", encryption=True)
+# Load and display a specific key-value pair
+loaded_key_value = data_system.load_data(key="key_name", encryption=True)
+print(f"Key: {loaded_key_value.key}, Value: {loaded_key_value.value}")
 
-# Print the value
-print(key_1.value)
+# Retrieve and display all key-value pairs in the data path
+print("All stored data:", data_system.get_all(path="data"))
 
-# Print the key
-print(key_1.key)
-
-# Get all key-value pairs
-print(data_system.get_all())
-
-# Delete data
+# Delete specific key-value data
 data_system.delete_data(key="key_name")
 
-# Delete account
+# Retrieve and display all player accounts
+print("All player accounts:", player_data_system.get_all(path="players"))
+
+# Delete a specific player account
 player_data_system.delete_account(username="john_doe")
 ```
 
