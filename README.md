@@ -21,7 +21,7 @@ Warm regards,
 
 ```py
 # Example for GitBase 0.4.0
-from gitbase import GitBase, PlayerDataSystem, DataSystem
+from gitbase import GitBase, PlayerDataSystem, DataSystem, KeyValue
 from cryptography.fernet import Fernet
 import sys
 
@@ -82,7 +82,7 @@ if player_data_system.get_all(path="players"):
 data_system.save_data(key="key_name", value=69, path="data", encryption=True)
 
 # Load and display a specific key-value pair
-loaded_key_value = data_system.load_data(key="key_name", encryption=True)
+loaded_key_value: KeyValue = data_system.load_data(key="key_name", encryption=True)
 print(f"Key: {loaded_key_value.key}, Value: {loaded_key_value.value}")
 
 # Retrieve and display all key-value pairs in the data path
