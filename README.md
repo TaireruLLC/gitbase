@@ -98,14 +98,14 @@ print("All player accounts:", player_data_system.get_all(path="players"))
 player_data_system.delete_account(username="john_doe")
 ```
 
-# Consider using [GitBase Web](https://tairerullc.vercel.app/apps/gitbase_web.html): 
+# Consider using [GitBase Web](https://tairerullc.vercel.app/extensions/gitbase-web): 
 ## Gitbase Web: 
 
 ### Gitbase Web is an extension of the python project by Taireru LLC called GitBase. This extension allows the developer to veiw all of their saved data via the web.
 ### Please note that to view said data you **MUST** use a private repo and use a website hosting service such as vercel.
 
 ## Links: 
-### GitBase: https://tairerullc.vercel.app/apps/gitbase.html
+### GitBase: https://tairerullc.vercel.app/packages/gitbase
 ### Website: https://tairerullc.vercel.app/
 
 
