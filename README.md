@@ -1,13 +1,13 @@
 # GitBase
 
-GitBase is a Python package for custom databases powered by GitHub, with encryption using `cryptography`. It allows you, as a python developer to have a quick and easy to use database without learning a whole new programming language. Furthermore, we offer offline backups for users of your application, this means their data can be saved, loaded, and deleted even if they have no internet. Moreover, the online version will be updated based on which file, the offline or online, is the latest.
+GitBase is a Python package for custom databases powered by GitHub, with encryption using `cryptography`. It allows you, as a python developer to have a simple but powerful way to use database without learning a whole new programming language. Furthermore, we offer offline backups for users of your application, this means their data can be saved, loaded, and deleted even if they have no internet. Moreover, the online version will be updated based on which file, the offline or online, is the latest.
 
 # Latest Update: 
 * Added file upload and downloading
 
 # Attention Developers: 
 
-We are both excited and grateful to announce that **GitBase** has transitioned to a paid product! You can now purchase it directly from our website: [GitBase Product Page](https://tairerullc.vercel.app/apps/gitbase.html).
+We are both excited and grateful to announce that **GitBase** has transitioned to a paid product! You can now purchase it directly from our website: [GitBase Product Page](https://tairerullc.vercel.app/packages/gitbase).
 
 For just **$5 USD**, you will receive the full version of GitBase after payment. We sincerely thank you for your support and for using the free version of our product. We hope you will continue to be part of our community as we evolve. 
 
