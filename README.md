@@ -6,12 +6,6 @@ GitBase is a Python package for custom databases powered by GitHub, with encrypt
 * Added video chunking and packing for faster loading times.
 * Added docstrings and type annotated a lot more of the code.
 
-Thank you for your continued support!
-
-Warm regards,  
-**Tyrell Scott**  
-**CEO & Founder, Taireru LLC**
-
 # Example code: 
 
 ```py
