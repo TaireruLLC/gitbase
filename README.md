@@ -1,15 +1,18 @@
 # GitBase
 
-GitBase is a Python package for custom databases powered by GitHub, with encryption using `cryptography`. It allows you, as a python developer to have a quick and easy to use database without learning a whole new programming language. Furthermore, we offer offline backups for users of your application, this means their data can be saved, loaded, and deleted even if they have no internet. Moreover, the online version will be updated based on which file, the offline or online, is the latest.
+GitBase is a Python package for custom databases powered by GitHub ("Gitbases"/"GitBase"), with encryption using `cryptography`. It provides Python developers with a quick and easy-to-use database solution without requiring knowledge of a new programming language. Additionally, GitBase offers offline backups, allowing users to save, load, and delete their data even without an internet connection. The online database will automatically sync with the latest file, whether offline or online.
 
-# Latest Update: 
-* Added video chunking and packing for faster loading times.
-* Added docstrings and type annotated a lot more of the code.
+---
 
-# Example code: 
+## Latest Update
+- Enhanced error handling: GitBases now raise exceptions for certain errors instead of just printing them, making debugging more efficient.
 
-```py
-# Example for GitBase 0.4.1
+---
+
+## Example Code
+
+```python
+# Example for GitBase 0.4.2
 from gitbase import GitBase, PlayerDataSystem, DataSystem, KeyValue
 from cryptography.fernet import Fernet
 import sys
@@ -87,15 +90,25 @@ print("All player accounts:", player_data_system.get_all(path="players"))
 player_data_system.delete_account(username="john_doe")
 ```
 
-# Consider using [GitBase Web](https://tairerullc.vercel.app/apps/gitbase_web.html): 
-## Gitbase Web: 
+---
 
-### Gitbase Web is an extension of the python project by Taireru LLC called GitBase. This extension allows the developer to veiw all of their saved data via the web.
-### Please note that to view said data you **MUST** use a private repo and use a website hosting service such as vercel.
+## Consider Using [GitBase Web](https://tairerullc.vercel.app/apps/gitbase_web.html)
 
-## Links: 
-### GitBase: https://tairerullc.vercel.app/apps/gitbase.html
-### Website: https://tairerullc.vercel.app/
+### GitBase Web
+GitBase Web is an extension of the Python project developed by Taireru LLC called GitBase. This extension allows developers to view all their saved data via the web. 
 
+**Note:** To use GitBase Web, you **must**:
+1. Use a private GitHub repository.
+2. Host the website using a service such as [Vercel](https://vercel.com).
 
-#### Contact 'tairerullc@gmail.com' for any inquires and we will get back at our latest expense. Thank you for using our product and happy coding!
+---
+
+## Links
+- **GitBase:** [https://tairerullc.vercel.app/apps/gitbase.html](https://tairerullc.vercel.app/apps/gitbase.html)
+- **Website:** [https://tairerullc.vercel.app/](https://tairerullc.vercel.app/)
+
+---
+
+## Contact
+For any inquiries, please email us at **tairerullc@gmail.com**. We’ll get back to you as soon as possible.  
+Thank you for using GitBase, and happy coding!
