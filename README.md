@@ -1,6 +1,6 @@
 # GitBase
 
-GitBase is a Python package for custom databases powered by GitHub ("Gitbases"/"GitBase"), with encryption using `cryptography`. It provides Python developers with a quick and easy-to-use database solution without requiring knowledge of a new programming language. Additionally, GitBase offers offline backups, allowing users to save, load, and delete their data even without an internet connection. The online database will automatically sync with the latest file, whether offline or online.
+GitBase is a custom database system built with Python and powered by GitHub, treating GitHub repositories as databases ("Gitbases" or "GitBase"). It features encryption using the `cryptography` library, ensuring data security. Designed for Python developers, GitBase provides a seamless and intuitive database solution without requiring knowledge of a separate database language. Additionally, it supports offline backups, enabling users to save, load, and delete data without an internet connection. Once online, the database automatically syncs with the latest stored file, ensuring consistency across offline and online environments.
 
 ---
 
