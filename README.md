@@ -5,20 +5,21 @@ GitBase is a Python package for custom databases powered by GitHub ("Gitbases"/"
 ---
 
 ## Latest Update
-- Added `MultiBase`, a new version of `GitBase` which allows for multiple GitBases; old `from gitbase import GitBase` import now known as 'Legacy'
-- Documented the code a bit more
-- Fixed `DataSystem.get_all()` (now returns `Dict[str, Any]`)
+- Made it possible to import `is_online` function from gitbase
 
 ---
 
 ## Example Code
 
 ```python
-# Example for GitBase 0.5.2
+# Example for GitBase 0.5.4
 
-from gitbase import MultiBase, PlayerDataSystem, DataSystem
+from gitbase import MultiBase, PlayerDataSystem, DataSystem, NotificationManager, is_online
 from cryptography.fernet import Fernet
 import sys
+
+# Check if they're online
+print(f"Is Online: {is_online()}") # `is_online` returns a bool value
 
 # Initialize GitHub database and encryption key
 GITHUB_TOKEN = "YOUR_TOKEN"
@@ -39,7 +40,7 @@ database = MultiBase([
     # {"token": "YOUR_SECOND_TOKEN", "repo_owner": "YOUR_GITHUB_USERNAME", "repo_name": "YOUR_SECOND_REPO", "branch": "main"}
 ])
 # In legacy use case do
-# from gitbase import GitBase
+# from gitbase import GitBase, PlayerDataSystem, DataSystem, NotificationManager
 # database = GitBase(token=GITHUB_TOKEN, repo_owner=REPO_OWNER, repo_name=REPO_NAME, branch='main')
 
 # Instantiate systems
@@ -104,8 +105,10 @@ data_system.delete_data(key="key_name", path="data")
 # Retrieve and display all player accounts
 print("All player accounts:", player_data_system.get_all(path="players"))
 
-# Delete a specific player account
+# Delete a specific player account and use NotificationManager to silence output
+NotificationManager.hide()
 player_data_system.delete_account(username="john_doe")
+NotificationManager.show()
 ```
 
 ---
@@ -122,8 +125,8 @@ GitBase Web is an extension of the Python project developed by Taireru LLC calle
 ---
 
 ## Links
-- **GitBase:** [https://tairerullc.vercel.app/products/packages/gitbase](https://tairerullc.vercel.app/products/packages/gitbase)
-- **Website:** [https://tairerullc.vercel.app/](https://tairerullc.vercel.app/)
+- **GitBase:** [https://pypi.org/project/gitbase](https://tairerullc.vercel.app/products/packages/gitbase)
+- **Website:** [https://tairerullc.com/](https://tairerullc.vercel.app/)
 
 ---
 
