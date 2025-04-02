@@ -4,31 +4,34 @@ GitBase is a Python package for custom databases powered by GitHub ("Gitbases"/"
 
 ---
 
-## Latest Update
-- Made it possible to import `is_online` function from gitbase
+## Latest Update (04/1/2025; 11:23 PM)
+- Added `ProxyFile` extension, which allows for playing audio and video files without download.
 
 ---
 
 ## Example Code
 
 ```python
-# Example for GitBase 0.5.4
+# GitBase 0.5.5 Showcase Example
 
-from gitbase import MultiBase, PlayerDataSystem, DataSystem, NotificationManager, is_online
+from gitbase import MultiBase, PlayerDataSystem, DataSystem, NotificationManager, ProxyFile, is_online
 from cryptography.fernet import Fernet
 import sys
 
-# Check if they're online
-print(f"Is Online: {is_online()}") # `is_online` returns a bool value
+# -------------------------
+# 1. Online Status Check
+# -------------------------
+print(f"Is Online: {is_online()}")  # Check if the system is online
 
-# Initialize GitHub database and encryption key
+# -------------------------
+# 2. GitHub Database Setup
+# -------------------------
 GITHUB_TOKEN = "YOUR_TOKEN"
 REPO_OWNER = "YOUR_GITHUB_USERNAME"
 REPO_NAME = "YOUR_REPO_NAME"
-encryption_key = Fernet.generate_key()
+encryption_key = Fernet.generate_key()  # Generate encryption key for secure storage
 
-# Setup MultiBase with one or more GitBase configurations.
-# You can add multiple configurations to handle repository fallback.
+# MultiBase setup with fallback repository configurations (if needed)
 database = MultiBase([
     {
         "token": GITHUB_TOKEN,
@@ -36,22 +39,39 @@ database = MultiBase([
         "repo_name": REPO_NAME,
         "branch": "main"
     },
-    # Additional GitBase configurations can be added here.
-    # {"token": "YOUR_SECOND_TOKEN", "repo_owner": "YOUR_GITHUB_USERNAME", "repo_name": "YOUR_SECOND_REPO", "branch": "main"}
+    # Additional GitBase configurations can be added here
+    # {"token": "SECOND_TOKEN", "repo_owner": "SECOND_USERNAME", "repo_name": "SECOND_REPO", "branch": "main"}
 ])
-# In legacy use case do
-# from gitbase import GitBase, PlayerDataSystem, DataSystem, NotificationManager
-# database = GitBase(token=GITHUB_TOKEN, repo_owner=REPO_OWNER, repo_name=REPO_NAME, branch='main')
 
-# Instantiate systems
+# -------------------------
+# 3. System Instantiation
+# -------------------------
 player_data_system = PlayerDataSystem(db=database, encryption_key=encryption_key)
 data_system = DataSystem(db=database, encryption_key=encryption_key)
 
-# File upload and download examples
+# -------------------------
+# 4. File Upload & Download
+# -------------------------
+# Upload file to GitHub repository
 database.upload_file(file_path="my_file.txt", remote_path="saved_files/my_file.txt")
+
+# Download file from GitHub repository
 database.download_file(remote_path="saved_files/my_file.txt", local_path="files/my_file.txt")
 
-# Define the Player class to manage individual player instances
+# -------------------------
+# 5. File Streaming with ProxyFile
+# -------------------------
+proxy_file = ProxyFile(repo_owner=REPO_OWNER, repo_name=REPO_NAME, token=GITHUB_TOKEN, branch="main")
+
+# Stream an audio file
+audio_file = proxy_file.play_audio(remote_path="audio_files/sample_audio.wav")
+
+# Stream a video file
+video_file = proxy_file.play_video(remote_path="video_files/sample_video.mp4")
+
+# -------------------------
+# 6. Player Class Definition
+# -------------------------
 class Player:
     def __init__(self, username, score, password):
         self.username = username
@@ -61,7 +81,10 @@ class Player:
 # Create a sample player instance
 player = Player(username="john_doe", score=100, password="123")
 
-# Save specific attributes of the player instance with encryption using MultiBase
+# -------------------------
+# 7. Save & Load Player Data with Encryption
+# -------------------------
+# Save player data to the repository (with encryption)
 player_data_system.save_account(
     username="john_doe",
     player_instance=player,
@@ -73,14 +96,19 @@ player_data_system.save_account(
 # Load player data
 player_data_system.load_account(username="john_doe", player_instance=player, encryption=True)
 
-# Placeholder functions for game flow
+# -------------------------
+# 8. Game Flow Functions
+# -------------------------
 def load_game():
     print("Game starting...")
 
 def main_menu():
     sys.exit("Exiting game...")
 
-# Check if an account exists and validate user password
+# -------------------------
+# 9. Account Validation & Login
+# -------------------------
+# Validate player credentials
 if player_data_system.get_all(path="players"):
     if player.password == input("Enter your password: "):
         print("Login successful!")
@@ -89,26 +117,32 @@ if player_data_system.get_all(path="players"):
         print("Incorrect password!")
         main_menu()
 
-# Save key-value data with encryption using MultiBase
+# -------------------------
+# 10. Save & Load General Data with Encryption
+# -------------------------
+# Save data (key-value) to the repository (with encryption)
 data_system.save_data(key="key_name", value=69, path="data", encryption=True)
 
-# Load and display a specific key-value pair
+# Load and display specific key-value pair
 loaded_key_value = data_system.load_data(key="key_name", path="data", encryption=True)
 print(f"Key: {loaded_key_value.key}, Value: {loaded_key_value.value}")
 
-# Retrieve and display all key-value pairs in the data path
+# Display all stored data
 print("All stored data:", data_system.get_all(path="data"))
 
 # Delete specific key-value data
 data_system.delete_data(key="key_name", path="data")
 
-# Retrieve and display all player accounts
+# -------------------------
+# 11. Player Account Management
+# -------------------------
+# Display all player accounts
 print("All player accounts:", player_data_system.get_all(path="players"))
 
-# Delete a specific player account and use NotificationManager to silence output
-NotificationManager.hide()
+# Delete a specific player account
+NotificationManager.hide()  # Hide notifications temporarily
 player_data_system.delete_account(username="john_doe")
-NotificationManager.show()
+NotificationManager.show()  # Show notifications again
 ```
 
 ---
