@@ -1,11 +1,11 @@
 # GitBase
 
-GitBase is a custom database system built with Python and powered by GitHub, treating GitHub repositories as databases ("Gitbases" or "GitBase"). It features encryption using the `cryptography` library, ensuring data security. Designed for Python developers, GitBase provides a seamless and intuitive database solution without requiring knowledge of a separate database language. Additionally, it supports offline backups, enabling users to save, load, and delete data without an internet connection. Once online, the database automatically syncs with the latest stored file, ensuring consistency across offline and online environments.
+GitBase is a custom database system built with Python and powered by GitHub, treating GitHub repositories as databases ("GitBases" or "GitBase"). It features encryption using the `cryptography` library, ensuring data security. Designed for Python developers, GitBase provides a seamless and intuitive database solution without requiring knowledge of a separate database language. Additionally, it supports offline backups, enabling users to save, load, and delete data without an internet connection. Once online, the database automatically syncs with the latest stored file, ensuring consistency across offline and online environments.
 
 ---
 
-## Latest Update (04/1/2025; 11:23 PM)
-- Added `ProxyFile` extension, which allows for playing audio and video files without download.
+## Latest Update (04/08/2025; 09:09 AM)
+- Removed `FancyUtil` credit message
 
 ---
 
