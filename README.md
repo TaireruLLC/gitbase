@@ -6,13 +6,14 @@ GitBase is a custom database system built with Python and powered by GitHub, tre
 
 ## Latest Update (04/08/2025; 09:09 AM)
 - Removed `FancyUtil` credit message
+- Added Legacy instructions
 
 ---
 
 ## Example Code
 
 ```python
-# GitBase 0.5.5 Showcase Example
+# GitBase v0.5.8 Showcase Example
 
 from gitbase import MultiBase, PlayerDataSystem, DataSystem, NotificationManager, ProxyFile, is_online
 from cryptography.fernet import Fernet
@@ -42,6 +43,9 @@ database = MultiBase([
     # Additional GitBase configurations can be added here
     # {"token": "SECOND_TOKEN", "repo_owner": "SECOND_USERNAME", "repo_name": "SECOND_REPO", "branch": "main"}
 ])
+# When using Legacy do the below instead
+# from gitbase import GitBase
+# database = GitBase(token=GITHUB_TOKEN, repo_owner=REPO_OWNER, repo_name=REPO_NAME)
 
 # -------------------------
 # 3. System Instantiation
